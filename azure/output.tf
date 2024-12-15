@@ -6,7 +6,6 @@ output "Eth0PublicIpAddress" {
 	}
 }
 
-
 output "Instance" {
 	description = "Instance resource associated with the virtual machine"
 	value = {

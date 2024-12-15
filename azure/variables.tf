@@ -32,11 +32,6 @@ variable "public_security_rule_source_ip_prefixes" {
     default = ["213.249.122.234"]
 }
 
-variable "InstanceId" {
-	default = "vnet"
-	type = string
-}
-
 variable "AgentVmSize" {
 	default = "Standard_F8s_v2"
 	description = "Category, series and instance specifications associated with the Agent VM"
@@ -122,26 +117,8 @@ variable "Eth1IpAddresses" {
 	type = list(string)
 }
 
-variable "ImageSku" {
-	default = "keysight-ixload-virtual-test-appliance-10-40"
-	description = "An instance of an offer, such as a major release of a distribution."
-	type = string
-}
-
-variable "ImageVersion" {
-	default = "10.40.75"
-	description = "The version number of an image SKU."
-	type = string
-}
-
-variable "MarketplaceImageOfferId" {
-	default = "keysight-ixload-virtual-edition"
-	description = "The name of a group of related images created by a publisher."
-	type = string
-}
-
-variable "MarketplaceImagePublisherId" {
-	default = "keysight-technologies-ixvm"
-	description = "The organization that created the image."
-	type = string
+variable "Build" {
+    default = "11.00.4444.155"
+    description = "Build version of our VMONE (VIRTUAL TEST APPLIANCE)"
+    type = string
 }

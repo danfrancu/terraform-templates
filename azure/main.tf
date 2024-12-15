@@ -157,15 +157,11 @@ resource "azurerm_subnet_network_security_group_association" "PrivateNetworkSecu
 	network_security_group_id = azurerm_network_security_group.PrivateNetworkSecurityGroup.id
 }
 
+# Search for the image based on the name that we're receiving and returning the ID
 data "azurerm_image" "search" {
-	name                = "Ixia_Cloud_Test_Appliance_11.00.4444.155"
+	name                = "Ixia_Cloud_Test_Appliance_${var.Build}"
 	resource_group_name = "ixvm-builds"
 }
-
-# output "target_image_id" {
-#   value = data.azurerm_image.search.id
-# }
-
 
 # Creating an instance 
 resource "azurerm_linux_virtual_machine" "Instance" {
@@ -205,6 +201,7 @@ resource "azurerm_linux_virtual_machine" "Instance" {
     }
 }
 
+# Create eth0 interface for our VM
 resource "azurerm_network_interface" "Eth0" {
 	name = local.eth0_name
 	location = azurerm_resource_group.rg.location
@@ -232,6 +229,7 @@ resource "azurerm_network_interface" "Eth0" {
     }    
 }
 
+# Create eth1 interface for our VM
 resource "azurerm_network_interface" "Eth1" {
 	name = local.eth1_name
 	location = azurerm_resource_group.rg.location
@@ -327,6 +325,7 @@ resource "azurerm_network_interface" "Eth1" {
     }    
 }
 
+# Create eth0 public IP address
 resource "azurerm_public_ip" "Eth0PublicIpAddress" {
 	name = local.eth0_public_ip_address
 	location = azurerm_resource_group.rg.location
