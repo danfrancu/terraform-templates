@@ -1,15 +1,11 @@
 variable "location" {
-	default = "westus2"
+	default = "eastus"
 	description = "Location where resource group stored"
 	type = string
 }
 
 variable "resource_group_name" {
-  default = "ixvm-regression-terraform"
-}
-
-variable "storage_account_name" {
-  default = "regression${random_id.RandomId.id}"
+    default = "ixvm-regression-terraform"
 }
 
 variable "vnet_address_prefix" {
@@ -19,7 +15,7 @@ variable "vnet_address_prefix" {
 }
 
 variable "public_subnet_prefix" {
-	default = "10.0.1.0/24"
+	default = "10.0.0.0/24"
 	description = "IP CIDR range allocated to the public subnet"
 	type = string
 }
@@ -33,4 +29,119 @@ variable "private_subnet_prefix" {
 variable "public_security_rule_source_ip_prefixes" {
 	description = "List of IP Addresses /32 or IP CIDR ranges connecting inbound to App"
 	type = list(string)
+    default = ["213.249.122.234"]
+}
+
+variable "InstanceId" {
+	default = "vnet"
+	type = string
+}
+
+variable "AgentVmSize" {
+	default = "Standard_F8s_v2"
+	description = "Category, series and instance specifications associated with the Agent VM"
+	type = string
+	validation {
+		condition = contains([	"Standard_F4s_v2",	"Standard_F8s_v2",	"Standard_F16s_v2"
+							], var.AgentVmSize)
+		error_message = <<EOF
+AgentVmSize must be one of the following sizes:
+	Standard_F4s_v2, Standard_F8s_v2, Standard_F16s_v2
+		EOF
+	}
+}
+
+variable "SkipProviderRegistration" {
+	default = false
+	description = "Indicates whether or not to ignore registration of Azure Resource Providers due to insuffiencient permissions"
+	type = bool
+}
+
+variable "SubscriptionId" {
+	default = null
+	description = "Id of subscription and underlying services used by the deployment"
+	sensitive = true
+	type = string
+}
+
+variable "TenantId" {
+	default = null
+	description  = "Id of an Azure Active Directory instance where one subscription may have multiple tenants"
+	sensitive = true
+	type = string
+}
+
+variable "ClientId" {
+	default = null
+	description = "Id of an application created in Azure Active Directory"
+	sensitive = true
+	type = string
+}
+
+variable "ClientSecret" {
+	default = null
+	description = "Authentication value of an application created in Azure Active Directory"
+	sensitive = true
+	type = string
+}
+
+variable "AdminUserName" {
+	default = "regression"
+	description = "Id of the VM administrator account"
+	type = string
+}
+
+variable "AdminPassword" {
+	default = "Regress!On"
+	description = "Password of the VM administrator account"
+    sensitive = true
+	type = string
+}
+
+variable "DisablePasswordAuthentication" {
+	default = false
+	description = "Disable SSH password auth in favor of key-based auth"
+	type = bool
+}
+
+variable "EnableIpForwarding" {
+	default = true
+	description = "Enables forwarding of network traffic to an address not assigned to VM"
+	type = bool
+}
+
+variable "Eth0IpAddress" {
+	default = "10.0.0.11"
+	description = "Private ip address associated with the first network interface"
+	type = string
+}
+
+variable "Eth1IpAddresses" {
+	default = ["10.0.10.12", "10.0.10.13", "10.0.10.14", "10.0.10.15", "10.0.10.16", "10.0.10.17", "10.0.10.18", "10.0.10.19", "10.0.10.20", "10.0.10.21"]
+	description = "Private ip addresses associated with the second network interface"
+	type = list(string)
+}
+
+variable "ImageSku" {
+	default = "keysight-ixload-virtual-test-appliance-10-40"
+	description = "An instance of an offer, such as a major release of a distribution."
+	type = string
+}
+
+variable "ImageVersion" {
+	default = "10.40.75"
+	description = "The version number of an image SKU."
+	type = string
+}
+
+variable "MarketplaceImageOfferId" {
+	default = "keysight-ixload-virtual-edition"
+	description = "The name of a group of related images created by a publisher."
+	type = string
+}
+
+variable "MarketplaceImagePublisherId" {
+	default = "keysight-technologies-ixvm"
+	description = "The organization that created the image."
+	type = string
 }
