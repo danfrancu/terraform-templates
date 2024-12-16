@@ -17,4 +17,5 @@ locals {
 	eth1_name = "eth1-${random_id.RandomId.id}"
 	instance_name = "reg-vmone-01"
 	vm_size = var.AgentVmSize
+	bianca_test = "reg-bianca"
 }
